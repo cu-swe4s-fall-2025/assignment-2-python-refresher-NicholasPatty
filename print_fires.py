@@ -1,6 +1,11 @@
-country='United States of America'
-county_column = 1
-fires_column = 4
+import my_utils
+
+# initialize inputs to get_column function
 file_name = 'Agrofood_co2_emission.csv'
-fires = get_column()
+country_column = 0
+country = 'United States of America'
+fires_column = 3
+
+# call get_column function to find forest fires in the United States
+fires = my_utils.get_column(file_name, country_column, country, fires_column)
 print(fires)
