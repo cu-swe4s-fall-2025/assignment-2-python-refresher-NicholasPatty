@@ -4,7 +4,7 @@ import my_utils
 file_name = 'Agrofood_co2_emission.csv'
 country_column = 0
 country = 'United States of America'
-fires_column = 3
+fires_column = 'Forest fires'
 
 # call get_column function to find forest fires in the United States
 fires = my_utils.get_column(file_name, country_column, country, fires_column)
