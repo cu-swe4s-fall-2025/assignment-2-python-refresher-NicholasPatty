@@ -6,6 +6,6 @@ country_column = 0
 country = 'United States of America'
 fires_column = 'Forest fires'
 
-# call get_column function to find forest fires in the United States
+# call get_column function to find emissions from forest fires in the US
 fires = my_utils.get_column(file_name, country_column, country, fires_column)
 print(fires)
