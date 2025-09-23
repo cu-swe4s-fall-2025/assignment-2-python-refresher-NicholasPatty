@@ -1,3 +1,6 @@
+import sys
+
+
 def get_column(file_name, query_column, query_value, result_column=1):
     """
     This function reads a CSV file and retrieves values from a specified column
@@ -17,10 +20,6 @@ def get_column(file_name, query_column, query_value, result_column=1):
     list: A list of values from the result_column where the query_column
     matches the query_value.
     """
-    import sys
-
-    get_column_array = []
-
     # open file and process it line by line -- handle file not found error
     try:
         f = open(file_name, 'r')
@@ -28,33 +27,58 @@ def get_column(file_name, query_column, query_value, result_column=1):
         print(f"Error: The file '{file_name}' was not found.")
         sys.exit(1)
 
+    # initialize empty array to hold results
+    get_column_array = []
     with f:
-
         header = f.readline().strip().split(',')
-        # check file header to determine index of result_column is a string
-        # if result_column is an integer, use it directly as the index
+
+        # handle case of result_column not being a valid input
+        try:
+            if header.index(result_column):
+                pass
+        except ValueError:
+            print(f"Error: The column '{result_column}' is not a valid option "
+                  f"for result_column.")
+            sys.exit(1)
+
+        # check header to determine index of result_column if it is a string
         if isinstance(result_column, str):
             result_index = header.index(result_column)
         else:
             result_index = result_column
 
-        # f.seek(0) # reset file pointer to the beginning of the file
-
-        # for each line, split the line into an array
+        # build array of results where query_column matches query_value
         for line in f:
             columns = line.strip().split(',')
-            # check to see if the query_column position matches the query_value
-            # when the above condition is met, add the value in the
-            # result_column position into the array
             if columns[query_column] == query_value:
-                get_column_array.append(columns[result_index])
-
-    # return the array storing the column values
+                # append integer value to results, handle non-numeric values
+                try:
+                    int_value = int(float(columns[result_index]))
+                    get_column_array.append(int_value)
+                except ValueError:
+                    print(f"Warning: Non-numeric value \
+                          '{columns[result_index]}' found. Exiting.")
+                    sys.exit(1)
     return get_column_array
+
+
+# main function to test get_column function
+def main():
+    file_name = 'Agrofood_co2_emission.csv'
+    country_column = 0
+    country = 'Canada'
+    fires_column = 'Forest fires'
+    print(get_column(file_name, country_column, country, fires_column))
+    print('Test of get_column function complete.')
+
+
+if __name__ == "__main__":
+    main()
+
 
 # uncomment below to test the function directly
 
-# file_name = 'Agrofood_co2_emissions.csv'
+# file_name = 'Agrofood_co2_emission.csv'
 # country_column = 0
 # country = 'United States of America'
 # fires_column = 'Forest fires'
