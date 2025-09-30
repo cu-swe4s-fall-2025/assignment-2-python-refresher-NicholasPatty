@@ -8,9 +8,12 @@ def print_fires():
     Print CO2 emissions from forest fires in a given country.
     Uses argparse to get user inputs for file name, country column index,
     country name, and fires column name.
+    In addition, the user can specify what operation from my_utils to perform
+    on the retrieved data (mean, median, std_dev).
     Calls get_column function from my_utils module to retrieve and print
-    the emissions data.
+    the emissions data OR result of the specified operation.
     """
+
     parser = argparse.ArgumentParser(description='Print CO2 emissions from '
                                      'forest fires in the US.',
                                      prog=my_utils)
@@ -26,12 +29,27 @@ def print_fires():
     parser.add_argument('--fires_column', type=str,
                         help='Column name for fire type of interest',
                         required=True)
+    parser.add_argument('--operation', type=str,
+                        choices=['mean', 'median', 'std_dev'],
+                        help='Statistical operation to perform on the data',
+                        required=False)
 
     args = parser.parse_args()
     fires = my_utils.get_column(args.file_name, args.country_column,
                                 args.country, args.fires_column)
-
-    return (print(fires))
+    # only perform operation if specified by user, otherwise just print data
+    if args.operation:
+        if args.operation == 'mean':
+            result = my_utils.mean(fires)
+        elif args.operation == 'median':
+            result = my_utils.median(fires)
+        elif args.operation == 'std_dev':
+            result = my_utils.std_dev(fires)
+        print(f"{args.operation} of CO2 emissions from {args.fires_column} "
+              f"in {args.country}: {result}")
+    if not args.operation:
+        print(f"CO2 emissions from {args.fires_column} in {args.country}:")
+        print(fires)
 
 
 def main():
