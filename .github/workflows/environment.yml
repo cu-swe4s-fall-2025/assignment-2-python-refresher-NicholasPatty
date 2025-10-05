@@ -1,0 +1,5 @@
+name: swe4s
+channels:
+  - pkgs/main
+dependencies:
+  - pycodestyle>=2.14
