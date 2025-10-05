@@ -14,7 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python test/unit/test_my_utils.py
-        working-directory: ./
   run_func_test:
     runs-on: ubuntu-latest
     steps:
@@ -24,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: mamba-org/setup-miniconda@v2
+      - uses: conda-incubator/setup-miniconda@v2
         with:
           environment-file: environment.yml
           init-shell: bash
