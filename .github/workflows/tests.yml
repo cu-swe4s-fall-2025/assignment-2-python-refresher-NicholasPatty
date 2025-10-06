@@ -11,21 +11,31 @@ on:
 jobs:
   run_unit_test:
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}/src
     steps:
       - uses: actions/checkout@v4
-      - run: python test/unit/test_my_utils.py
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Run unit tests
+        run: python test/unit/test_my_utils.py
   run_func_test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: bash test/func/test_print_fires.sh 
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Run functional tests
+        run: bash test/func/test_print_fires.sh
   run_linter:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: conda-incubator/setup-miniconda@v2
+      - uses: mamba-org/setup-miniconda@v2
         with:
-          environment-file: environment.yml
+          environment-file: .github/workflows/environment.yml
           init-shell: bash
       - run: pycodestyle $(git ls-files '*.py')
         shell: bash -l {0}
