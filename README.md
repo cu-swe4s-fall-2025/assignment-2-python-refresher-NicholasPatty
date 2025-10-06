@@ -32,4 +32,6 @@ python3 test_my_utils.py
 To run the function tests, a command like the following should suffice:
 bash test/func/test_print_fires.sh
 
-I also provided a small sample file (test_file.csv) for testing.
+Note - provided a small sample file (test_file.csv) for testing.
+
+To run basic, automated tests, I created a tests.yml file in .github/workflows. This file runs when any branch is pushed, and when a pull request is made from the main branch. It runs: unit tests (test_my_utils.py), functional tests (test_print_fires.sh), and style checks. To run style checks, I needed to create an environment.yml file to install pycodestyle.
