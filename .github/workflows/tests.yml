@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: mamba-org/setup-miniconda@v2
+      - uses: conda-incubator/setup-miniconda@v2
         with:
           environment-file: .github/workflows/environment.yml
           init-shell: bash
