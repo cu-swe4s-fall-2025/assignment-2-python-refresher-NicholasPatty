@@ -1,0 +1,6 @@
+name: swe4s
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - pycodestyle>=2.14

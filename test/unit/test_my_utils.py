@@ -5,7 +5,7 @@ import random
 # Adjust the path as necessary to import my_utils
 sys.path.append('../../src/')
 
-import my_utils
+import my_utils  # noqa: E402
 
 
 class TestMyUtils(unittest.TestCase):
